@@ -1,26 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import './TodoList.css';
 
 function TodoList() {
+
+    const [lista, setLista] = useState([]);
+    const [novoItem, setNovoItem] = useState("");
+
+    function adicionaItem(form){
+        form.preventDefault();
+        if (!novoItem) {
+            return;
+        }
+        setLista([...lista, {text: novoItem, isCompleted: false }])
+        setNovoItem("");
+        document.getElementById('input-entrada').focus();
+
+    }
+
+
+
     return (
-      <div> 
+    <div> 
           <h1>To do List</h1>
-        <form>
+        <form onSubmit={adicionaItem}>
             <input 
-            type="text"
-            placeholder="Add a Task" 
+                id="input-entrada"
+                type="text"
+                value={novoItem} 
+                onChange={(e)=>{setNovoItem(e.target.value)}}
+                placeholder="Add a Task" 
             />
             <button className="add" type="submit">Add</button>
         </form>
         <div className="listaTarefas">
             <div className="item">
                 <span>Tarefa de exemplo</span>
-                <button>Deletar</button>
+                <button className="del">Deletar</button>
             </div>
             <div className="item completo">
                 <span>Tarefa de exemplo</span>
-                <button>Deletar</button>
+                <button className="del">Deletar</button>
             </div>
+            <button className="deleteAll">Deletar Todas</button>
         </div>
      </div>
         )
